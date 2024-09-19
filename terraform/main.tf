@@ -36,11 +36,11 @@ resource "aws_vpc_security_group_ingress_rule" "http" {
 
 # EC2 Инстанс
 resource "aws_instance" "ansible_instance" {
-  ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t2.micro"
-  subnet_id              = aws_subnet.main.id
-  key_name               = var.ssh_key_name
-  security_groups        = [aws_security_group.ansible_sg.name]
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.main.id
+  key_name                    = var.ssh_key_name
+  security_groups             = [aws_security_group.ansible_sg.name]
   associate_public_ip_address = true
 
   tags = {
@@ -51,11 +51,18 @@ resource "aws_instance" "ansible_instance" {
 # Data resource для получения последней версии Ubuntu AMI
 data "aws_ami" "ubuntu" {
   most_recent = true
-  owners      = ["099720109477"]  # Owner ID для Ubuntu
+
   filter {
     name   = "name"
     values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
   }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical's owner ID for Ubuntu AMIs
 }
 
 # Локальный провайдер для записи данных в Ansible inventory файл
@@ -64,5 +71,5 @@ resource "local_file" "ansible_inventory" {
 [ansible_instance]
 ${aws_instance.ansible_instance.public_dns}
 EOF
-  filename = "${path.module}/ansible/inventory/inventory.ini"
+  filename = "${path.module}/../ansible/inventory/inventory.ini"
 }
