@@ -4,8 +4,7 @@ variable "aws_region" {
   description = "aws region"
 }
 
-# Определение переменных
 variable "ssh_key_name" {
-  description = "Имя SSH ключа"
+  description = "AWS EC2 SSH "
   default     = "~/.ssh/aws_instance.pub"
 }

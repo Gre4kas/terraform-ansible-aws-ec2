@@ -39,8 +39,8 @@ resource "aws_instance" "ansible_instance" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.main.id
-  key_name                    = var.ssh_key_name
-  security_groups             = [aws_security_group.ansible_sg.name]
+  key_name                    = aws_key_pair.ansible_key_ssh.key_name
+  security_groups             = [aws_security_group.ansible_sg.id]
   associate_public_ip_address = true
 
   tags = {
@@ -54,7 +54,7 @@ data "aws_ami" "ubuntu" {
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
   }
 
   filter {
@@ -72,4 +72,9 @@ resource "local_file" "ansible_inventory" {
 ${aws_instance.ansible_instance.public_dns}
 EOF
   filename = "${path.module}/../ansible/inventory/inventory.ini"
+}
+
+resource "aws_key_pair" "ansible_key_ssh" {
+  key_name   = "ansible_key_ssh"
+  public_key = file(var.ssh_key_name) # Path to your public key
 }
