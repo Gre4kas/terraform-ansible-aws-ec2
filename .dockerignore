@@ -1,0 +1,11 @@
+Dockerfile
+
+.git
+.gitignore
+
+.gitattributes
+.gitmodules
+.gitkeep
+
+*.patch
+*.diff
