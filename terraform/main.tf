@@ -30,12 +30,27 @@ resource "aws_vpc_security_group_ingress_rule" "ssh" {
 }
 
 # Правило Ingress для порта 5000
-resource "aws_vpc_security_group_ingress_rule" "http" {
+resource "aws_vpc_security_group_ingress_rule" "test_port" {
   security_group_id = aws_security_group.ansible_sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 5000
   to_port           = 5000
   ip_protocol       = "tcp"
+}
+
+resource "aws_vpc_security_group_ingress_rule" "http" {
+  security_group_id = aws_security_group.ansible_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 80
+  to_port           = 80
+  ip_protocol       = "tcp"
+}
+
+
+resource "aws_vpc_security_group_egress_rule" "allow_all_egress" {
+  security_group_id = aws_security_group.ansible_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1"
 }
 
 # EC2 Инстанс
