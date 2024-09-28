@@ -1,0 +1,20 @@
+---
+- name: Deploy Flask and Nginx
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Docker
+      ansible.builtin.include_tasks:
+        file: install_docker.yaml
+      register: docker_result
+
+    - name: Deploy Flask container
+      ansible.builtin.include_tasks:
+        file: deploy_flask.yaml
+      when: docker_result
+      register: flask_result
+
+    - name: Deploy Nginx and configure reverse proxy
+      ansible.builtin.include_tasks:
+        file: deploy_nginx.yaml
+      when: flask_result is succeeded

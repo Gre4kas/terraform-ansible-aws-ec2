@@ -1,0 +1,22 @@
+---
+- name: Remove Nginx default configuration and conditionally restart Nginx
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Check if the default Nginx site configuration exists
+      ansible.builtin.stat:
+        path: /etc/nginx/sites-enabled/default
+      register: nginx_default_file
+
+    - name: Remove the default Nginx site configuration if it exists
+      ansible.builtin.file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      when: nginx_default_file.stat.exists
+
+    - name: Restart Nginx service if default configuration was removed
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+      when: nginx_default_file.stat.exists

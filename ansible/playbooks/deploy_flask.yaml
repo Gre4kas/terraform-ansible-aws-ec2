@@ -1,0 +1,18 @@
+- name: Deploy Flask app container
+  hosts: all
+  become: true
+  tasks:
+    - name: Pull and run Flask container
+      block:
+        - name: Pull and run Flask container
+          community.docker.docker_container:
+            name: flask_app
+            image: da1ly/appflask:0.3.0
+            state: started
+            ports:
+              - "5000:5000"
+            restart_policy: always
+      rescue:
+        - name: Output failure message
+          ansible.builtin.debug:
+            msg: "Flask container deployment failed."
