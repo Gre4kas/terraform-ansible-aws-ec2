@@ -1,16 +1,16 @@
 provider "aws" {
-  region = "us-east-1" 
+  region = var.region
 }
 
 terraform {
     required_version = ">= 1.0.0"
     # backend "s3" {
     #     # Replace this with your bucket name!
-    #     bucket = "<YOUR_S3_BUCKET_HERE>"
+    #     bucket = "terraform-remote-state-bucket-gre4ka"
     #     key = "global/s3/terraform.tfstate"
-    #     region= "us-east-2"
+    #     region= "us-east-1"
     #     # Replace this with your DynamoDB table name!
-    #     dynamodb_table = "YOUR_DYNAMODB_TABLE_NAME_HERE"
+    #     dynamodb_table = "terraform-remote-state-dynamo"
     #     encrypt        = true
     # } 
 }

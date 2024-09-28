@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "terraform-remote-state-bucket-gre4ka" 
+  bucket = var.bucket_name 
 
   lifecycle {
     prevent_destroy = true // to-do to make var  
@@ -7,7 +7,7 @@ resource "aws_s3_bucket" "terraform_state" {
 
   tags = {
     Name        = "Terraform State"
-    Environment = "Production"
+    Environment = "Development"
   }
 }
 
@@ -37,7 +37,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state" 
 }
 
 resource "aws_dynamodb_table" "terraform_locks_table" {
-  name         = "terraform-state-locking"
+  name         = var.terraform_remote_table_name
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
   attribute {
