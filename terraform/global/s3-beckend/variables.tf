@@ -7,11 +7,11 @@ variable "region" {
 variable "bucket_name" {
   description = "The name of the S3 bucket. Must be globally unique."
   type        = string
-  default = "terraform-remote-state-bucket-gre4ka"
+  default     = "terraform-remote-state-bucket-gre4ka"
 }
 
 variable "terraform_remote_table_name" {
   description = "The name of the DynamoDB table. Must be unique in this AWS account."
   type        = string
-  default = "terraform-remote-state-dynamo"
+  default     = "terraform-remote-state-dynamo"
 }
