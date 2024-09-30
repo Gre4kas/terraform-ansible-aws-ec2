@@ -72,10 +72,12 @@ jobs:
         run: |
           ansible-galaxy role install -r collections/requirements.yml
           ansible-galaxy collection install -r collections/requirements.yml
+        working-directory: ./ansible
 
       - name: Install Ansible role
         run: |
           ansible-galaxy role install -r collections/requirements.yml
+        working-directory: ./ansible
 
       - name: Run Ansible Playbook
         run: |
