@@ -31,6 +31,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/aws_instance
+          chmod 700 ~/.ssh
           chmod 600 ~/.ssh/aws_instance
 
       - name: Set up SSH public key
