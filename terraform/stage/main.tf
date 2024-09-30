@@ -90,7 +90,7 @@ resource "local_file" "ansible_inventory" {
 [ansible_instance]
 ${aws_instance.ansible_instance.public_dns}
 EOF
-  filename = "${path.module}/../ansible/inventory/inventory.ini"
+  filename = "${path.module}/../../ansible/inventory/inventory.ini"
 }
 
 resource "aws_key_pair" "ansible_key_ssh" {
