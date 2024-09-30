@@ -82,5 +82,5 @@ jobs:
 
       - name: Run Ansible Playbook
         run: |
-          ansible-playbook ./playbooks/main_deploy.yaml -i ./inventory/inventory.ini -i ./inventory/inventory.ini
+          ansible-playbook ./playbooks/main_deploy.yaml -i ./inventory/inventory.ini -i ./inventory/inventory2.ini
         working-directory: ./ansible
