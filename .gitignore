@@ -34,5 +34,4 @@ override.tf.json
 terraform.rc
 .terraform.lock.hcl
 
-# Ansible
-ansible/inventory/inventory.ini
+
